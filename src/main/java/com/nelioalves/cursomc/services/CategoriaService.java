@@ -2,6 +2,7 @@ package com.nelioalves.cursomc.services;
 
 import java.util.Optional;
 
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +16,9 @@ public class CategoriaService {
 	private CategoriaRepository repo;
 	
 	public Categoria find(Integer id) {
-		Optional<Categoria> obj=repo.findById(id);
-		return obj.orElse(null);
+		Optional<Categoria> obj = repo.findById(id);
+			return obj.orElseThrow(() -> new com.nelioalves.cursomc.services.exceptions.ObjectNotFoundException (
+									"Objeto não encontrado! Id: " + id +  ", Tipo: " + Categoria.class.getName()));
 	}
 
 }
